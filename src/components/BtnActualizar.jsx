@@ -43,6 +43,22 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
     colorMode === "light" ? "bg-[#FEF7F2] text-black" : "bg-white text-black";
   //Subir archivo
   const [archivo, setArchivo] = useState([]); //-file
+  const handleFileChange = (e) => {
+    const nuevosArchivos = Array.from(e.target.files);
+
+    setArchivo((prev) => {
+      const existentes = prev.map((f) => `${f.name}-${f.size}`);
+
+      const filtrados = nuevosArchivos.filter(
+        (f) => !existentes.includes(`${f.name}-${f.size}`)
+      );
+
+      return [...prev, ...filtrados];
+    });
+
+    // 🔥 IMPORTANTE: resetear input
+    e.target.value = null;
+  };
   // const [imag, setImag] = useState(propiedad.multimedia || []);
   // console.log("", imag)
   // const [imagenesExistentes,setImagenesExistentes]=useState([propiedad.multimedia || []]);
@@ -389,7 +405,7 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
                 multiple
                 accept="image/*"
                 display="none"
-                onChange={(e) => setArchivo(Array.from(e.target.files))}
+                onChange={handleFileChange}
               />
               {/* htmlFor="fileInput"  */}
               <label onClick={onOpenImg}>
