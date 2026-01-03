@@ -88,12 +88,12 @@ const BtnSalir = () => {
             <Temas />
             <button
               onClick={handleLogout}
-              className="bg-[#FEF7F2] text-black p-2 py-1 rounded-sm cursor-pointer shadow-sm shadow-black"
+              className="flex flex-col items-center justify-center w-[70px] h-[70px] bg-[#FEF7F2] rounded-md shadow-md hover:shadow-lg transition-shadow duration-200"
             >
               <img
-                className="w-5"
                 src="/img/ArrowRightStartOnRectangle.svg"
-                alt="salir"
+                alt="Salir"
+                className="w-6 h-6 mb-1"
               />
             </button>
           </div>

@@ -110,60 +110,64 @@ const Crud = () => {
     <div class="flex flex-col gap-6">
       <BtnSalir />
 
-      <Tabs
-        isManual
-        variant="enclosed"
-        className="flex justify-center flex-col items-center"
-      >
-        {/* class='flex justify-center flex-col items-center' */}
-        <TabList>
-          <Tab
-            color={"silver"}
-            fontWeight={"400"}
-            _selected={{
-              bg: "#FEF7F2",
-              color: "#952C00",
-              fontWeight: "600",
-              boxShadow: "-1px 0px 5px 0px rgb(149,44,0,0.4)",
-            }}
-          >
-            Administrar Terreno
-          </Tab>
-          <Tab
-            color={"silver"}
-            fontWeight={"400"}
-            _selected={{
-              bg: "#FEF7F2",
-              color: "#952C00",
-              fontWeight: "600",
-              boxShadow: "1px 0px 5px 0px rgb(149,44,0,0.4)",
-            }}
-          >
-            Administrar Usuarios
-          </Tab>
-        </TabList>
-        <TabPanels class="w-fit">
-          <TabPanel>
-            <div class="container mx-auto px-4">
-              <Box as="main" className="py-8 bg-[#FEF7F2]">
-                <div class="flex items-center justify-between mb-6 border-b border-red-200">
-                  <div class="text-[25px]">
-                    <h1 textColor={"black"} class="text-[25px] font-bold">
+      <div className="w-full max-w-screen-xl mx-auto px-4">
+        <Tabs
+          isManual
+          variant="enclosed"
+          className="flex flex-col items-center"
+        >
+          <TabList className="flex justify-center gap-4 mb-6">
+            <Tab
+              color="silver"
+              fontWeight="400"
+              _selected={{
+                bg: "#FEF7F2",
+                color: "#952C00",
+                fontWeight: "600",
+                boxShadow: "-1px 0px 5px 0px rgb(149,44,0,0.4)",
+              }}
+            >
+              Administrar Terreno
+            </Tab>
+            <Tab
+              color="silver"
+              fontWeight="400"
+              _selected={{
+                bg: "#FEF7F2",
+                color: "#952C00",
+                fontWeight: "600",
+                boxShadow: "1px 0px 5px 0px rgb(149,44,0,0.4)",
+              }}
+            >
+              Administrar Usuarios
+            </Tab>
+          </TabList>
+
+          <TabPanels className="w-full">
+            <TabPanel>
+              <Box
+                as="main"
+                className="bg-[#FEF7F2] px-6 py-8 rounded-md shadow-sm"
+              >
+                {/* Título y botón */}
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 border-b border-red-200 gap-4">
+                  <div>
+                    <h1 className="text-[25px] font-bold text-black">
                       Panel de Administración de Terrenos
                     </h1>
-                    <p class="text-gray-400 text-[15px]">
+                    <p className="text-gray-400 text-[15px]">
                       Gestiona todos los terrenos disponibles
                     </p>
                   </div>
 
                   <BtnAgregar
                     onPropiedadCreada={cargarPropiedadesPage}
-                    className="w-full sm:w-[190px] px-4 py-2 text-sm sm:text-base"
+                    className="inline-flex items-center w-full sm:w-[190px] px-4 py-2 justify-center bg-[#952C00] rounded-md text-white hover:bg-[#7a2200] transition-colors"
                   />
                 </div>
 
-                <div class="overflow-x-auto">
-                  <table class="min-w-full caption-bottom text-sm border-collapse md:border-separate md:rounded-lg overflow-hidden ">
+                <div className="overflow-x-auto">
+                  <table className="min-w-full text-sm border-collapse md:border-separate md:rounded-lg">
                     <thead class="!border-1 !border-black !rounded-lg">
                       <tr class="text-foreground text-center font-medium whitespace-nowrap h-[40px] bg-[#dac6be] ">
                         <th class="min-w-[150px] md:min-w-[250px] text-left text-[14px] px-5 border border-gray-300 text-black ">
@@ -307,7 +311,7 @@ const Crud = () => {
                 </div>
 
                 {/* Paginación */}
-                <div class="flex justify-center items-center gap-4 mt-6">
+                <div className="flex justify-center items-center gap-4 mt-6">
                   <button
                     onClick={() => {
                       setPage((p) => Math.max(p - 1, 0));
@@ -335,13 +339,14 @@ const Crud = () => {
                   </button>
                 </div>
               </Box>
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <TabUsuario />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+            </TabPanel>
+
+            <TabPanel>
+              <TabUsuario />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </div>
     </div>
   );
 };
