@@ -92,7 +92,7 @@ const BtnSalir = () => {
             >
               <img
                 class="w-5"
-                src="/public/img/ArrowRightStartOnRectangle.svg"
+                src="/img/ArrowRightStartOnRectangle.svg"
                 alt="salir"
               />
             </buttton>
