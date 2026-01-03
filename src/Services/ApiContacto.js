@@ -1,4 +1,5 @@
-const API_CONTAC = "http://localhost:8080/api/contacto";
+const BASE_URL = import.meta.env.VITE_API_URL;
+const API_CONTAC = `${BASE_URL}/api/contacto`;
 
 // 🧩 POST - Crear propiedad
 export async function crearContacto(data) {
@@ -20,7 +21,9 @@ export async function crearContacto(data) {
       responseData = { message: text || "Respuesta no válida del servidor" };
     }
     if (!response.ok) {
-      const errorMessage = responseData?.message || `Error al crear propiedad (status ${response.status})`;
+      const errorMessage =
+        responseData?.message ||
+        `Error al crear propiedad (status ${response.status})`;
       throw new Error(errorMessage);
     }
     return responseData;
@@ -29,7 +32,6 @@ export async function crearContacto(data) {
     throw error;
   }
 }
-
 
 import axios from "axios";
 
@@ -46,5 +48,3 @@ export const listarContactos = async () => {
     throw new Error("Error al listar propiedades: " + error.response?.status);
   }
 };
-
-

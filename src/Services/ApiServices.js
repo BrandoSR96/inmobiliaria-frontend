@@ -1,5 +1,5 @@
-
-const API_URL = "http://localhost:8080/api/propiedades";
+const BASE_URL = import.meta.env.VITE_API_URL;
+const API_URL = `${BASE_URL}/api/propiedades`;
 
 // 🧩 GET - Listar propiedad
 export async function listarPropiedades() {
@@ -14,8 +14,6 @@ export async function listarPropiedades() {
     throw error;
   }
 }
-
-
 
 // 🧩 PUT - Actualizar propiedad
 export async function actualizarPropiedad(id, data) {
@@ -54,7 +52,7 @@ export async function crearPropiedad(data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });
@@ -67,7 +65,9 @@ export async function crearPropiedad(data) {
       responseData = { message: text || "Respuesta no válida del servidor" };
     }
     if (!response.ok) {
-      const errorMessage = responseData?.message || `Error al crear propiedad (status ${response.status})`;
+      const errorMessage =
+        responseData?.message ||
+        `Error al crear propiedad (status ${response.status})`;
       throw new Error(errorMessage);
     }
     return responseData;
@@ -87,7 +87,7 @@ export async function eliminarPropiedad(id) {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -95,7 +95,9 @@ export async function eliminarPropiedad(id) {
     console.log("🔍 Backend response:", response.status, text);
 
     if (!response.ok) {
-      throw new Error(`Error al eliminar propiedad (${response.status}): ${text}`);
+      throw new Error(
+        `Error al eliminar propiedad (${response.status}): ${text}`
+      );
     }
     return true;
   } catch (error) {
@@ -103,6 +105,3 @@ export async function eliminarPropiedad(id) {
     return false;
   }
 }
-
-
-

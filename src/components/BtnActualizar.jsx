@@ -1,5 +1,25 @@
 import React, { useState } from "react";
-import { Button, useDisclosure, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, Textarea, NumberInput, NumberInputField, Select, useToast, Flex, Box, } from "@chakra-ui/react";
+import {
+  Button,
+  useDisclosure,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  NumberInput,
+  NumberInputField,
+  Select,
+  useToast,
+  Flex,
+  Box,
+} from "@chakra-ui/react";
 import { actualizarPropiedad } from "../Services/ApiServices";
 import { subirMultimedia } from "../hooks/useMultimedia";
 import { AiOutlineClose } from "react-icons/ai";
@@ -7,16 +27,20 @@ import { useColorMode } from "@chakra-ui/react";
 import Carousel from "../components/Carousel"; // ajusta la ruta
 import axios from "axios";
 
-const BtnActualizar = ({ propiedad, onActualizado}) => {
+const API_URL = import.meta.env.VITE_API_URL;
+
+const BtnActualizar = ({ propiedad, onActualizado }) => {
   // const images=<Carousel images={propiedad.multimedia}/>
-  console.log("PROPIEDAD EN BTN ACTUALIZAR Cantidad:", propiedad.multimedia.length);
+  console.log(
+    "PROPIEDAD EN BTN ACTUALIZAR Cantidad:",
+    propiedad.multimedia.length
+  );
   console.log("PROPIEDAD EN BTN ACTUALIZAR:", propiedad.multimedia);
   console.log("PROPIEDAD EN BTN ACTUALIZAR ID:", propiedad.multimedia[0]?.id);
   const { colorMode } = useColorMode();
-  
-  const fondo = colorMode === "light"
-    ? "bg-[#FEF7F2] text-black"
-    : "bg-white text-black";
+
+  const fondo =
+    colorMode === "light" ? "bg-[#FEF7F2] text-black" : "bg-white text-black";
   //Subir archivo
   const [archivo, setArchivo] = useState([]); //-file
   // const [imag, setImag] = useState(propiedad.multimedia || []);
@@ -24,7 +48,11 @@ const BtnActualizar = ({ propiedad, onActualizado}) => {
   // const [imagenesExistentes,setImagenesExistentes]=useState([propiedad.multimedia || []]);
   // const [imagenesEliminar,setImagenesEliminar]=useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { isOpen: isOpenImg, onOpen: onOpenImg, onClose: onCloseImg, } = useDisclosure();
+  const {
+    isOpen: isOpenImg,
+    onOpen: onOpenImg,
+    onClose: onCloseImg,
+  } = useDisclosure();
   const [formData, setFormData] = useState({ ...propiedad });
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -50,7 +78,7 @@ const BtnActualizar = ({ propiedad, onActualizado}) => {
   // const handleSubmit = async () => {
   //   try {
   //     setLoading(true);
-      
+
   //     // 1️⃣ Actualizar la propiedad
   //     const response = await actualizarPropiedad(formData.id, formData);
 
@@ -123,20 +151,70 @@ const BtnActualizar = ({ propiedad, onActualizado}) => {
   //     setLoading(false);
   //   }
   // };
-  
+
   const handleSubmit = async () => {
-  try {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    // 👉 1️⃣ Actualizar la propiedad CON las imágenes actuales
-    const dataActualizada = {
-      ...formData,
-      multimedia: imagenes, // 🔥 CLAVE: imágenes después de eliminar
-    };
+      // 👉 1️⃣ Actualizar la propiedad CON las imágenes actuales
+      const dataActualizada = {
+        ...formData,
+        multimedia: imagenes, // 🔥 CLAVE: imágenes después de eliminar
+      };
 
-    const response = await actualizarPropiedad(formData.id, dataActualizada);
+      const response = await actualizarPropiedad(formData.id, dataActualizada);
 
-    if (!response) {
+      if (!response) {
+        toast({
+          title: "Error",
+          description: "No se pudo actualizar la propiedad",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+        return;
+      }
+
+      // 👉 2️⃣ Subir imágenes nuevas (archivo)
+      if (archivo.length > 0) {
+        try {
+          for (const img of archivo) {
+            await subirMultimedia(img, "imagen", formData.id);
+          }
+
+          toast({
+            title: "Imágenes subidas",
+            description: "Todas las imágenes fueron subidas correctamente",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+          });
+        } catch (error) {
+          console.error("Error subiendo multimedia:", error);
+          toast({
+            title: "Error al subir imágenes",
+            description:
+              "La propiedad se actualizó, pero algunas imágenes fallaron",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+          });
+        }
+      }
+
+      toast({
+        title: "Propiedad actualizada",
+        description: "Los datos fueron guardados correctamente",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+
+      setArchivo([]); // limpiar archivos seleccionados
+      onClose();
+      if (onActualizado) onActualizado();
+    } catch (error) {
+      console.error("Error al actualizar:", error);
       toast({
         title: "Error",
         description: "No se pudo actualizar la propiedad",
@@ -144,79 +222,31 @@ const BtnActualizar = ({ propiedad, onActualizado}) => {
         duration: 3000,
         isClosable: true,
       });
-      return;
+    } finally {
+      setLoading(false);
     }
+  };
 
-    // 👉 2️⃣ Subir imágenes nuevas (archivo)
-    if (archivo.length > 0) {
-      try {
-        for (const img of archivo) {
-          await subirMultimedia(img, "imagen", formData.id);
-        }
-
-        toast({
-          title: "Imágenes subidas",
-          description: "Todas las imágenes fueron subidas correctamente",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-        });
-      } catch (error) {
-        console.error("Error subiendo multimedia:", error);
-        toast({
-          title: "Error al subir imágenes",
-          description:
-            "La propiedad se actualizó, pero algunas imágenes fallaron",
-          status: "error",
-          duration: 3000,
-          isClosable: true,
-        });
-      }
-    }
-
-    toast({
-      title: "Propiedad actualizada",
-      description: "Los datos fueron guardados correctamente",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-
-    setArchivo([]); // limpiar archivos seleccionados
-    onClose();
-    if (onActualizado) onActualizado();
-
-  } catch (error) {
-    console.error("Error al actualizar:", error);
-    toast({
-      title: "Error",
-      description: "No se pudo actualizar la propiedad",
-      status: "error",
-      duration: 3000,
-      isClosable: true,
-    });
-  } finally {
-    setLoading(false);
-  }
-};
-
-// Elimina imágenes nuevas (del estado archivo)
-const removeImagenNueva = (index) => {
-  setArchivo((prev) => prev.filter((_, i) => i !== index));
-};
+  // Elimina imágenes nuevas (del estado archivo)
+  const removeImagenNueva = (index) => {
+    setArchivo((prev) => prev.filter((_, i) => i !== index));
+  };
 
   const removeImagenExistente = async (id) => {
-  try {
-    const token = localStorage.getItem("token"); // JWT válido
-    await axios.delete("http://localhost:8080/api/multimedia/eliminar", {
-      headers: { Authorization: `Bearer ${token}` },
-      params: { multimediaIds: [id] } // 👈 enviar como lista
-    });
-    setImagenes(prev => prev.filter(img => img.id !== id));
-  } catch (error) {
-    console.error("Error eliminando la imagen:", error.response?.data || error.message);
-  }
-};
+    try {
+      const token = localStorage.getItem("token"); // JWT válido
+      await axios.delete(`${API_URL}/api/multimedia/eliminar`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { multimediaIds: [id] }, // 👈 enviar como lista
+      });
+      setImagenes((prev) => prev.filter((img) => img.id !== id));
+    } catch (error) {
+      console.error(
+        "Error eliminando la imagen:",
+        error.response?.data || error.message
+      );
+    }
+  };
 
   return (
     <Box as="div" color={"black"} bgColor={"none"}>
@@ -580,9 +610,11 @@ const removeImagenNueva = (index) => {
 
 export default BtnActualizar;
 
-
-                    {/* <img src={propiedad.multimedia[0].url} /> */}
-                    {/* {propiedad.multimedia.length > 0 && (
+{
+  /* <img src={propiedad.multimedia[0].url} /> */
+}
+{
+  /* {propiedad.multimedia.length > 0 && (
                       <Box mt={4}>
                         <Flex wrap="wrap" gap={3}>                          
                           {imagenes.map((img, index) => (
@@ -609,8 +641,10 @@ export default BtnActualizar;
                           ))}
                         </Flex>
                       </Box>
-                    )} */}
- {/* <Input
+                    )} */
+}
+{
+  /* <Input
                 id="fileInput"
                 type="file"
                 multiple
@@ -654,18 +688,19 @@ export default BtnActualizar;
                     </div>
                   ))}
                 </div>
-              )} */}
+              )} */
+}
 
-              
-  // const removeImage = (indexToRemove) => {
-  //   setArchivo((prev)=> prev.filter((_, i) =>1 !==indexToRemove));
-  // };
-  // const removeExistenteImage(indexToRemove) => {
-  //   const removed = imagenesExistentes[indexToRemove];
-  //   setImagenesEliminar((prev)=>[...prev,removed.id]);
-  //   setImagenesExistentes((prev)=>prev.filter((_, i) =>i !==indexToRemove));
-  // }
- {/* <FormLabel class="flex flex-col gap-1">File Imagen</FormLabel>
+// const removeImage = (indexToRemove) => {
+//   setArchivo((prev)=> prev.filter((_, i) =>1 !==indexToRemove));
+// };
+// const removeExistenteImage(indexToRemove) => {
+//   const removed = imagenesExistentes[indexToRemove];
+//   setImagenesEliminar((prev)=>[...prev,removed.id]);
+//   setImagenesExistentes((prev)=>prev.filter((_, i) =>i !==indexToRemove));
+// }
+{
+  /* <FormLabel class="flex flex-col gap-1">File Imagen</FormLabel>
               <Input
                 key="fileInput"
                 bg={"red.100"}
@@ -696,4 +731,5 @@ export default BtnActualizar;
                     </div>
                   ))}
                 </div>
-              )} */}
+              )} */
+}

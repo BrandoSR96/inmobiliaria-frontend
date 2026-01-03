@@ -10,6 +10,8 @@ import axios from "axios";
 import { useIdioma } from "../components/IdiomaContext";
 import { textos } from "../components/traductor/textos";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Inicio = () => {
   const { idioma } = useIdioma();
 
@@ -34,9 +36,7 @@ const Inicio = () => {
 
   useEffect(() => {
     const cargarPropiedades = async () => {
-      const response = await axios.get(
-        "http://localhost:8080/api/propiedades/listar"
-      );
+      const response = await axios.get(`${API_URL}/api/propiedades/listar`);
       setPropiedades(response.data);
     };
     cargarPropiedades();
