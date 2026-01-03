@@ -60,16 +60,15 @@ const Inicio = () => {
           <div class="relative max-w-[100%] w-[400px] mx-auto max-h-[48px] flex justify-center py-1 mb-10 items-center 2xl:px-0  xl:w-[100%] xl:px-0 md:px-0 md:w-[100%] lg:w-full bg-[#FEF7F2] lg:px-0 2xl:w-full  sm:w-full">
             <input
               type="text"
-              placeholder="Buscar por ubicación, distrito o características..."
+              placeholder={textos[idioma].inicio.buscar}
               value={filters.busqueda}
               onChange={(e) => updateFilter("busqueda", e.target.value)}
-              class="  file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input w-full min-w-0 rounded-md border bg-transparent px-3 py-1 shadow-xs transition-[color,box-shadow] outline-1 file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-md file:font-medium disabled:pointer-events-none  disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-[#8a3a13] focus-visible:ring-[#8a3a13]/50 focus-visible:ring-[5px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive !pl-5 !h-10 text-base"
+              className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input w-full min-w-0 rounded-md border bg-transparent px-3 py-1 shadow-xs transition-[color,box-shadow] outline-1 file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-md file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-[#8a3a13] focus-visible:ring-[#8a3a13]/50 focus-visible:ring-[5px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive !pl-5 !h-10 text-base"
             />
             {hayFiltrosBusqueda && (
-              // text-sm !text-black-500 font-thin w-fit !px-[10px] !py-[5px] hover:shadow-sm hover:rounded-xl hover:border !hover:bg-green-700 flex justify-between gap-2 items-center
               <button
                 onClick={() => updateFilter("busqueda", "")}
-                className="absolute right-3 top-4"
+                className="absolute right-3 top-2"
               >
                 <AiOutlineClose />
               </button>

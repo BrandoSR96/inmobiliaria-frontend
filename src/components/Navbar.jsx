@@ -33,9 +33,9 @@ const Navbar = () => {
         <div class="flex gap-2 h-15 flex-row text-left w-6x1 justify-between content-center items-center">
           {/* <img class="w-[35px] h-[35px]" src="/public/img/Home.svg" alt="" /> */}
           <img
-            class="w-[70px] h-[70px]"
+            className="w-[60px] h-auto"
             src="/img/logo_sinfondo.png"
-            alt="Logo"
+            alt="logo"
           />
           <div>
             <h1 class={`text-[12px] lg:text-[18px] xl:text-[18px] ${fondo}`}>
