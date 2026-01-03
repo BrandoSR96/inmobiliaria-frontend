@@ -96,7 +96,7 @@ const BtnSalir = () => {
             <Temas />
             <button
               onClick={handleLogout}
-              class="bg-[#FEF7F2] text-black p-2 py-1 rounded-sm cursor-pointer shadow-sm shadow-black"
+              class="!bg-[#FEF7F2] !text-[#0e0d0d] !p-1 rounded-sm cursor-pointer shadow-sm shadow-black"
             >
               <img
                 class="w-5"
