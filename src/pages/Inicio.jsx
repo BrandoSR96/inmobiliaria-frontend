@@ -99,7 +99,7 @@ const Inicio = () => {
           >
             <img
               class="w-13 hover:w-15 transition-all duration-200"
-              src="../../public/img/whatsapp.png"
+              src="../img/whatsapp.png"
               alt=""
             />
           </a>
