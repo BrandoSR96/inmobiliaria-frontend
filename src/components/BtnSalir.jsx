@@ -88,7 +88,7 @@ const BtnSalir = () => {
             <Temas />
             <button
               onClick={handleLogout}
-              className="flex flex-col items-center justify-center w-[70px] h-[70px] bg-[#FEF7F2] rounded-md shadow-md hover:shadow-lg transition-shadow duration-200"
+              class="!bg-[#FEF7F2] !text-[#0e0d0d] !p-1 rounded-sm cursor-pointer shadow-sm shadow-black"
             >
               <img
                 src="/img/ArrowRightStartOnRectangle.svg"
