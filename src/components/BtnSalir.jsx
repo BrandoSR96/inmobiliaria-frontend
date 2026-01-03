@@ -88,12 +88,12 @@ const BtnSalir = () => {
             <Temas />
             <button
               onClick={handleLogout}
-              class="!bg-[#FEF7F2] !text-[#0e0d0d] !p-1 rounded-sm cursor-pointer shadow-sm shadow-black"
+              className="!bg-[#FEF7F2] text-black rounded-sm cursor-pointer shadow-sm  shadow-black"
             >
               <img
+                className="w-[25px] h-[25px]"
                 src="/img/ArrowRightStartOnRectangle.svg"
                 alt="Salir"
-                className="w-6 h-6 mb-1"
               />
             </button>
           </div>
