@@ -66,16 +66,24 @@ const BtnSalir = () => {
   return (
     <>
       <div
-        class={`flex justify-center w-full h-[76px] px-10 rounded-md shadow-md 2xl:px-15 ${fondo}`}
+        className={`flex justify-center w-full h-[76px] px-4 sm:px-10 2xl:px-15 rounded-md shadow-md ${fondo}`}
       >
         <div
-          class={`flex justify-between h-[76px] items-center w-[1468px] gap-10 p-[16px] ${fondo}`}
+          className={`flex justify-between items-center w-full max-w-screen-xl gap-6 py-4 ${fondo}`}
         >
-          <div class="flex gap-2 h-15  text-left w-6x1 justify-between content-center items-center">
-            <img class="w-15" src="/img/logo_sinfondo.png" alt="logo" />
+          <div className="flex gap-3 items-center">
+            <img
+              className="w-[60px] h-auto"
+              src="/img/logo_sinfondo.png"
+              alt="logo"
+            />
             <div>
-              <h1 class="text-[20px]">Terrenos Cusco</h1>
-              <p class="text-[12px]">Terrenos en el Corazón de los Andes</p>
+              <h1 className="text-[16px] sm:text-[20px] font-bold text-black">
+                Terrenos Cusco
+              </h1>
+              <p class="text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px] text-gray-600">
+                Terrenos en el Corazón de los Andes
+              </p>
             </div>
           </div>
           <div class="flex gap-3 h-15 text-center mx-5 items-center">
@@ -86,7 +94,7 @@ const BtnSalir = () => {
               Inicio
             </button>
             <Temas />
-            <buttton
+            <button
               onClick={handleLogout}
               class="bg-[#FEF7F2] text-black p-2 py-1 rounded-sm cursor-pointer shadow-sm shadow-black"
             >
@@ -95,7 +103,7 @@ const BtnSalir = () => {
                 src="/img/ArrowRightStartOnRectangle.svg"
                 alt="salir"
               />
-            </buttton>
+            </button>
           </div>
         </div>
       </div>
