@@ -86,16 +86,16 @@ const BtnSalir = () => {
               Inicio
             </button>
             <Temas />
-            <buttton
+            <button
               onClick={handleLogout}
-              class="bg-[#FEF7F2] text-black p-2 py-1 rounded-sm cursor-pointer shadow-sm shadow-black"
+              className="bg-[#FEF7F2] text-black p-2 py-1 rounded-sm cursor-pointer shadow-sm shadow-black"
             >
               <img
-                class="w-5"
+                className="w-5"
                 src="/img/ArrowRightStartOnRectangle.svg"
                 alt="salir"
               />
-            </buttton>
+            </button>
           </div>
         </div>
       </div>
