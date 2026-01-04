@@ -361,7 +361,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                           <div class="flex gap-6">
                             <img
                               class="w-5 h-5 text-xs"
-                              src="/public/img/MapPin.svg"
+                              src="/img/MapPin.svg"
                               alt=""
                             />
                             <p>
@@ -374,7 +374,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                           <div class="flex gap-6">
                             <img
                               class="w-5 text-xs"
-                              src="/public/img/Arrow-Arrow-expand.svg"
+                              src="/img/Arrow-Arrow-expand.svg"
                               alt=""
                             />
                             <p>{prop.metrosCuadrados} m²</p>
