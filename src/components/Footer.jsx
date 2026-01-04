@@ -36,6 +36,18 @@ const Footer = () => {
             {textos[idioma].footer.inmobiliario}
           </h3>
           <p>{textos[idioma].footer.cusco}</p>
+
+          {/* Botón de agendar reunión */}
+          <div class="mt-3">
+            <a
+              href="https://calendly.com/brando111096/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn-outline-dark px-5 py-2 rounded"
+            >
+              Agendar Reunión
+            </a>
+          </div>
         </div>
         <div>
           <h3 class={`!text-[16px] !font-[650] pb-[10px] ${fondoFooter}`}>
