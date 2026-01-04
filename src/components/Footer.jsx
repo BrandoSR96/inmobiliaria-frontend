@@ -39,14 +39,14 @@ const Footer = () => {
 
           {/* Botón de agendar reunión */}
           <div class="mt-3">
-            <a
+            <button
               href="https://calendly.com/brando111096/30min"
               target="_blank"
               rel="noopener noreferrer"
               class="btn btn-outline-dark px-5 py-2 rounded"
             >
               Agendar Reunión
-            </a>
+            </button>
           </div>
         </div>
         <div>
