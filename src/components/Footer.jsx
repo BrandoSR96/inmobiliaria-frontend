@@ -15,14 +15,6 @@ const Footer = () => {
 
   const { colorMode } = useColorMode();
 
-  // const fondo = colorMode === "light"
-  //   ? "bg-[#FEF7F2] text-black"
-  //   : "bg-gray-900 text-white";
-
-  // const fondoSeccion = colorMode === "light"
-  //   ? "bg-[#FEF7F2]"
-  //   : "bg-gray-800";
-
   const fondoFooter = colorMode === "light" ? "bg-orange-300" : "bg-gray-800";
 
   return (
@@ -30,7 +22,6 @@ const Footer = () => {
       <div
         class={`mt-10 flex flex-col pl-10 justify-between py-6  gap-5 2xl:flex 2xl:flex-row xl:flex-row lg:flex-row md:flex-row md:p-5 sm:flex-col sm:px-[16px] sm:py-[48px] text-[14px] ${fondoFooter}`}
       >
-        {/* bg-orange-300 */}
         <div>
           <h3 class={`!text-[16px] !font-[650] pb-[10px] ${fondoFooter}`}>
             {textos[idioma].footer.inmobiliario}
