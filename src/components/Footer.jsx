@@ -43,7 +43,7 @@ const Footer = () => {
               href="https://calendly.com/brando111096/30min"
               target="_blank"
               rel="noopener noreferrer"
-              class="btn btn-outline-dark px-5 py-2 rounded"
+              class="w-full h-10 !text-white !bg-black rounded-sm "
             >
               Agendar Reunión
             </button>
