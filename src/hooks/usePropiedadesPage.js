@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+//const API_URL = import.meta.env.VITE_API_URL;
 
 const usePropiedadesPage = (initialParams = {}) => {
   const [propiedades, setPropiedades] = useState([]);
@@ -26,21 +26,24 @@ const usePropiedadesPage = (initialParams = {}) => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${API_URL}/api/propiedades/paginadas`, {
-        params: {
-          page,
-          size,
-          sortBy: "precio",
-          direction,
-          tipo,
-          estado,
-          precioMin,
-          precioMax,
-          areaMin,
-          areaMax,
-          distrito,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:8080/api/propiedades/paginadas",
+        {
+          params: {
+            page,
+            size,
+            sortBy: "precio",
+            direction,
+            tipo,
+            estado,
+            precioMin,
+            precioMax,
+            areaMin,
+            areaMax,
+            distrito,
+          },
+        }
+      );
 
       setPropiedades(response.data.content || []);
       setTotalPages(response.data.totalPages || 1);

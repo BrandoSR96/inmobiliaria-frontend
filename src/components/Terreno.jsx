@@ -18,7 +18,8 @@ import Carousel from "./Carousel";
 import { useColorMode } from "@chakra-ui/react";
 import { useIdioma } from "../components/IdiomaContext";
 import { textos } from "../components/traductor/textos";
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = "http://localhost:8080";
+const ENV = import.meta.env.VITE_API_URL;
 
 const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
   const { idioma } = useIdioma();
@@ -68,14 +69,17 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
     try {
       setLoading(true);
 
-      const response = await axios.get(`${API_URL}/api/propiedades/paginadas`, {
-        params: {
-          page,
-          size,
-          sortBy: "precio",
-          direction,
-        },
-      });
+      const response = await axios.get(
+        "http://localhost:8080/api/propiedades/paginadas",
+        {
+          params: {
+            page,
+            size,
+            sortBy: "precio",
+            direction,
+          },
+        }
+      );
       setPropiedades(response.data.content || []);
       setTotalPages(response.data.totalPages || 1);
     } catch (error) {
@@ -276,9 +280,10 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                 // Debug: muestra multimedia
                 // console.log("Propiedad multimedia", prop.multimedia);
                 // console.log("Propiedad completa:", prop);
-                // console.log("Multimedia:", prop.multimedia);
-                // console.log("multimedia[0]?.url:", prop.multimedia?.[0]?.url);
-                const urlImagen = prop.multimedia?.[0]?.url || "/img/fondo.png";
+                console.log("Multimedia:", prop.multimedia);
+                console.log("multimedia[0]?.url:", prop.multimedia?.[0]?.url);
+                const urlImagen =
+                  prop.multimedia?.[0]?.url || "/public/img/fondo.png";
                 // console.log("urlImagen:", urlImagen);
                 return (
                   <div
@@ -313,7 +318,9 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                           class="object-cover group-hover:scale-105 transition-transform duration-300 z-0 
                        inset-0 text-transparent h-[fit] w-[fit] mx-auto 2xl:h-[100%] 2xl:w-[100%] lg:h-[100%] lg:w-[100%] xl:h-[100%] xl:w-[100%] md:h-[100%] md:w-[100%]"
                           // sm:h-full sm:w-full h-[192px] w-[382px]
-                          src={urlImagen || prop.multimedia?.[0]?.url}
+
+                          //src={urlImagen || prop.multimedia?.[0]?.url}
+                          src={`${ENV || API_URL}${urlImagen}`}
                           alt={prop.titulo}
                         />
                       </div>
@@ -417,28 +424,32 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
         >
           {/* <ModalOverlay/> bg-white */}
           <ModalContent
-            class={`w-fit h-fit max-sm:max-w-[90%] 2xl:w-[850px] lg:w-[650px] md:w-[550px] sm:w-fit ${fondoSeccion}`}
+            class={`w-fit h-fit max-sm:max-w-[90%] 2xl:w-[850px] lg:w-[650px] md:w-[550px] sm:w-fit `}
           >
-            <ModalBody>
+            <ModalBody pr={0} pt={0} p={0}>
               {selectedProp && (
                 <div
                   key={selectedProp.id}
-                  class=" h-[523px] w-[460px] max-sm:max-w-[300px] xl:w-full md:w-full bg-card text-card-foreground flex flex-col cursor-pointer"
+                  class={`${fondoSeccion} h-[523px] w-[460px] max-sm:max-w-[300px] xl:w-full md:w-full bg-card text-card-foreground flex flex-col cursor-pointer`}
                 >
-                  <div class="flex justify-between items-center px-[0px]">
-                    <ModalHeader class="py-[15px] text-[24px]">
+                  <div
+                    class={`flex justify-between items-center px-[0px] ${fondoSeccion}`}
+                  >
+                    <ModalHeader
+                      class={`py-[15px] pl-[10px] text-[24px] ${fondoSeccion}`}
+                    >
                       {selectedProp.titulo}
                     </ModalHeader>
-                    <ModalCloseButton class="w-[30px] p-[10px]" />
+                    <ModalCloseButton
+                      class={`w-[30px] p-[10px] ${fondoSeccion}`}
+                    />
                   </div>
-                  <div class="flex gap-6 flex-col">
-                    <div class="h-full bg-muted ">
+                  <div class={`flex gap-6 flex-col ${fondoSeccion} `}>
+                    <div class={`h-full bg-muted ${fondoSeccion} `}>
                       {(() => {
                         const imagenesProp =
-                          selectedProp?.multimedia?.map((img) =>
-                            img.url.startsWith("http")
-                              ? img.url
-                              : `${API_URL}${img.url}`
+                          selectedProp?.multimedia?.map(
+                            (img) => `${ENV || API_URL}${img.url}`
                           ) || [];
                         return (
                           <Carousel
@@ -450,12 +461,6 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                           />
                         );
                       })()}
-                      {/* <Carousel images={imagenesProp.length > 0 ? imagenesProp : ["/img/fondo.png"]}/> */}
-                      {/* <img
-                        class="w-full h-full object-cover"
-                        src="/public/img/fondo.png "
-                        alt="Imagen"
-                      /> */}
                     </div>
 
                     <div class="p-[16px] flex flex-col gap-6 ">
@@ -569,7 +574,7 @@ const Terreno = ({ filteredPropiedades, filters, updateFilter }) => {
                         <p class="text-[1rem]">{selectedProp.descripcion}</p>
                       </footer>
                     </div>
-                    <div>
+                    <div className="px-[16px]">
                       <Button
                         onClick={onClose}
                         colorScheme="red"

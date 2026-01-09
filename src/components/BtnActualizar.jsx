@@ -27,7 +27,7 @@ import { useColorMode } from "@chakra-ui/react";
 import Carousel from "../components/Carousel"; // ajusta la ruta
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+//const API_URL = import.meta.env.VITE_API_URL;
 
 const BtnActualizar = ({ propiedad, onActualizado }) => {
   // const images=<Carousel images={propiedad.multimedia}/>
@@ -251,7 +251,7 @@ const BtnActualizar = ({ propiedad, onActualizado }) => {
   const removeImagenExistente = async (id) => {
     try {
       const token = localStorage.getItem("token"); // JWT válido
-      await axios.delete(`${API_URL}/api/multimedia/eliminar`, {
+      await axios.delete("http://localhost:8080/api/multimedia/eliminar", {
         headers: { Authorization: `Bearer ${token}` },
         params: { multimediaIds: [id] }, // 👈 enviar como lista
       });

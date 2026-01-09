@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL;
+//const API_URL = import.meta.env.VITE_API_URL;
 
 const Datos = () => {
   const [propiedades, setPropiedades] = useState([]);
@@ -13,9 +13,12 @@ const Datos = () => {
 
   const fetchPage = useCallback(async () => {
     try {
-      const response = await axios.get(`${API_URL}/api/propiedades/paginadas`, {
-        params: { page, size, sortBy: "precio", direction: direccion },
-      });
+      const response = await axios.get(
+        "http://localhost:8080/api/propiedades/paginadas",
+        {
+          params: { page, size, sortBy: "precio", direction: direccion },
+        }
+      );
       const data = response.data;
       setPropiedades(data.content || []);
       setTotalPages(data.totalPages || 1);
